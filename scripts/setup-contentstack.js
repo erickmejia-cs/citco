@@ -317,6 +317,7 @@ const CONTENT_TYPES = [
     description: 'Main site navigation links',
     schema: [
       tf('title', 'Title', { mandatory: true }),
+      ff('logo', 'Logo'),
       group('nav_items', 'Nav Items', [
         tf('label', 'Label', { mandatory: true }),
         tf('url', 'URL'),

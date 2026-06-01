@@ -10,7 +10,9 @@ export interface NavItem {
 }
 
 export interface Navigation {
+  uid: string;
   title: string;
+  logo?: CSFile;
   nav_items: NavItem[];
   utility_links: NavItem[];
 }
