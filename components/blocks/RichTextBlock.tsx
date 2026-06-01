@@ -2,7 +2,7 @@ import { jsonToHtml } from '@contentstack/json-rte-serializer';
 import type { RichTextData } from '@/types';
 
 interface Props {
-  block: RichTextData;
+  block: RichTextData | null | undefined;
   cslpPrefix?: string;
 }
 
@@ -11,8 +11,19 @@ function cslp(prefix?: string, field?: string): Record<string, string> {
   return { 'data-cslp': `${prefix}.${field}` };
 }
 
+function safeJsonToHtml(content: unknown): string {
+  if (!content || typeof content !== 'object') return '';
+  try {
+    return jsonToHtml(content as any) ?? '';
+  } catch {
+    return '';
+  }
+}
+
 export default function RichTextBlock({ block, cslpPrefix }: Props) {
-  const html = block.content ? jsonToHtml(block.content as any) : '';
+  if (!block) return null;
+
+  const html = safeJsonToHtml(block.content);
 
   return (
     <section className="bg-white py-16">
@@ -25,11 +36,11 @@ export default function RichTextBlock({ block, cslpPrefix }: Props) {
             {block.heading}
           </h2>
         )}
-        <div
-          className="rte-content"
-          dangerouslySetInnerHTML={{ __html: html }}
-          {...cslp(cslpPrefix, 'content')}
-        />
+        {/* data-cslp must be on a wrapper, not on the dangerouslySetInnerHTML
+            element — the VB SDK and React would otherwise fight over innerHTML. */}
+        <div {...cslp(cslpPrefix, 'content')}>
+          <div className="rte-content" dangerouslySetInnerHTML={{ __html: html }} />
+        </div>
       </div>
     </section>
   );
