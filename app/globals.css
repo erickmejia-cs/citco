@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --navy: #0A1628;
+  --navy-mid: #1A2F4E;
+  --citco-green: #005B30;
+  --citco-green-hover: #007A42;
+  --gray-light: #F5F6F7;
+  --border: #E5E7EB;
+}
+
+@layer base {
+  * {
+    box-sizing: border-box;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply text-gray-900 antialiased;
+    font-family: var(--font-inter), system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold leading-tight;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-white text-navy font-semibold text-sm transition-all duration-200 hover:bg-gray-100;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center gap-2 px-6 py-3 border border-white text-white font-semibold text-sm transition-all duration-200 hover:bg-white hover:text-navy;
+  }
+
+  .btn-green {
+    @apply inline-flex items-center gap-2 px-6 py-3 bg-[#005B30] text-white font-semibold text-sm transition-all duration-200 hover:bg-[#007A42];
+  }
+
+  .section-label {
+    @apply text-xs font-bold tracking-widest uppercase text-[#005B30];
+  }
+
+  .container-wide {
+    @apply max-w-7xl mx-auto px-6 lg:px-8;
+  }
+}
