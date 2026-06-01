@@ -82,7 +82,7 @@ export interface InsightsGridData {
 
 export interface RichTextData {
   heading?: string;
-  content: string;
+  content: Record<string, unknown>;
 }
 
 export interface CtaBannerData {

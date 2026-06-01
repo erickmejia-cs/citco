@@ -162,6 +162,19 @@ function referenceField(uid, label, referenceTo, opts = {}) {
   };
 }
 
+function jrtef(uid, label, mandatory = false) {
+  return {
+    data_type: 'json',
+    display_name: label,
+    uid,
+    field_metadata: { description: '', allow_json_rte: true, rich_text_type: 'standard', version: 3 },
+    multiple: false,
+    mandatory,
+    unique: false,
+    non_localizable: false,
+  };
+}
+
 function blocksField(uid, label, blockDefs) {
   return {
     data_type: 'blocks',
@@ -264,7 +277,7 @@ const GLOBAL_FIELDS = [
     uid: 'rich_text',
     schema: [
       tf('heading', 'Section Heading'),
-      tf('content', 'Content', { mandatory: true }),
+      jrtef('content', 'Content', true),
     ],
   },
   {

@@ -1,3 +1,4 @@
+import { jsonToHtml } from '@contentstack/json-rte-serializer';
 import type { RichTextData } from '@/types';
 
 interface Props {
@@ -11,6 +12,8 @@ function cslp(prefix?: string, field?: string): Record<string, string> {
 }
 
 export default function RichTextBlock({ block, cslpPrefix }: Props) {
+  const html = block.content ? jsonToHtml(block.content as any) : '';
+
   return (
     <section className="bg-white py-16">
       <div className="max-w-3xl mx-auto px-6 lg:px-8">
@@ -22,17 +25,11 @@ export default function RichTextBlock({ block, cslpPrefix }: Props) {
             {block.heading}
           </h2>
         )}
-        <div className="space-y-5">
-          {block.content.split('\n\n').map((para, i) => (
-            <p
-              key={i}
-              className="text-gray-600 text-lg leading-relaxed"
-              {...(i === 0 ? cslp(cslpPrefix, 'content') : {})}
-            >
-              {para}
-            </p>
-          ))}
-        </div>
+        <div
+          className="rte-content"
+          dangerouslySetInnerHTML={{ __html: html }}
+          {...cslp(cslpPrefix, 'content')}
+        />
       </div>
     </section>
   );
